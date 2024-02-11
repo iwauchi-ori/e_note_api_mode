@@ -1,0 +1,64 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - bin/**/*
+    - config/**/*
+    - db/schema.rb
+    - db/migrate/*.rb
+    # - lib/tasks/**/*
+    - lib/tasks/auto_annotate_models.rake
+    - log/**/*
+    - public/**/*
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+    - tmp/**/*
+    - vendor/**/*
+    - config.ru
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  TargetRubyVersion: 3.1
+  NewCops: enable
+
+# Style
+Style/AsciiComments:
+  Enabled: false # 日本語のコメントを許可
+Style/Documentation:
+  Enabled: false
+
+# Metrics
+Metrics/AbcSize:
+  Max: 34
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+Metrics/ClassLength:
+  Max: 180
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/MethodLength:
+  Max: 19
+Metrics/PerceivedComplexity:
+  Max: 10
+
+# Rails
+Rails/EnvironmentVariableAccess:
+  # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsenvironmentvariableaccess
+  AllowReads: true # ENV での環境変数の読み取りを許可
+
+# RSpec
+RSpec/ContextWording:
+  Enabled: false # contextの日本語記述を許可
+RSpec/ExampleLength:
+  Max: 30
+RSpec/MultipleExpectations:
+  Max: 5
+RSpec/MultipleMemoizedHelpers:
+  Max: 18
+RSpec/NestedGroups:
+  Max: 4

@@ -1,0 +1,52 @@
+# SQLite. Versions 3.8.0 and up are supported.
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem "sqlite3"
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_general_ci # SELECT文で大文字小文字を区別しないようにするため。絵文字や旧漢字など4バイト文字列を区別できない問題（寿司ビール問題）があり、その対応が必要になった場合は utf8mb4_bin への変更も含めて検討が必要。
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch('DB_USER', 'root') %>
+  password: <%= ENV.fetch('DB_PASSWORD', 'root') %>
+  host: <%= ENV.fetch('DB_HOST', '127.0.0.1') %>
+  port: <%= ENV.fetch('DB_PORT', '33306') %>
+
+development:
+  <<: *default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_general_ci # SELECT文で大文字小文字を区別しないようにするため。絵文字や旧漢字など4バイト文字列を区別できない問題（寿司ビール問題）があり、その対応が必要になった場合は utf8mb4_bin への変更も含めて検討が必要。
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch('DB_USER', 'root') %>
+  password: <%= ENV.fetch('DB_PASSWORD', 'root') %>
+  host: <%= ENV.fetch('DB_HOST', '127.0.0.1') %>
+  database: <%= ENV.fetch('DB_NAME', 'tretter_rails_development') %>
+  port: <%= ENV.fetch('DB_PORT', '33306') %>
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: tretter_rails_test
+
+production:
+  <<: *default
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+
+staging:
+  <<: *default
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
